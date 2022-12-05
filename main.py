@@ -1,5 +1,7 @@
-import telebot
 import json
+
+import telebot
+from telebot import util
 
 from revChatGPT.revChatGPT import Chatbot
 
@@ -7,9 +9,9 @@ from revChatGPT.revChatGPT import Chatbot
 # read config json file
 with open('config.json') as config_file:
     config = json.load(config_file)
-
+5
 # initialize chatbot
-chatbot = Chatbot(config["openAI"], conversation_id=None)
+chatbot = Chatbot(config["openAI"], conversation_id=None,)
 chatbot.refresh_session()
 
 # initialize telegram bot
@@ -56,8 +58,16 @@ def refresh_session(message):
 
 # Handle all other messages with content_type 'text' (content_types defaults to ['text'])
 @bot.message_handler(func=lambda message: True)
-def echo_message(message):
+def responde(message):
+    # get openAI response
     resp = chatbot.get_chat_response(message.text, output="text")
-    bot.reply_to(message, resp['message'])
-
+    
+    # check for telegram message length limit (5000 chars)
+    if len(resp['message']) < 5000:
+        bot.reply_to(message, resp['message'])
+    else:
+        splitted_text = util.smart_split(resp['message'], chars_per_string=5000)
+        for text in splitted_text:
+            bot.reply_to(message, text)
+            
 bot.infinity_polling()

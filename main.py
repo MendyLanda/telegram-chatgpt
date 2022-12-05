@@ -29,13 +29,17 @@ Send /help to see what I can do.
 # Handle '/help'
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    bot.reply_to(message, """\
-    Here are the commands I can understand:
+    bot.reply_to(message, """
+Here are the commands I can understand:
+
+    /start - Start the bot
+    /stop - Stop the bot
+    
     /help - Show this message
     /reset - Reset the conversation
     /refresh - Refresh the session token
-    
-    To start a conversation, just send me a message. I will reply with a message from the model.
+
+To start a conversation, just send me a message. I will reply with a message from the model.
 """)
 
 # Handle '/reset'

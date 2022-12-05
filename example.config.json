@@ -1,0 +1,9 @@
+{
+    "openAI": {
+        "email": "<YOUR_EMAIL>",
+        "password": "<YOUR_PASSWORD>"
+    },
+    "telegram": {
+        "token": "<YOUR_API_TOKEN>"
+    }
+}
